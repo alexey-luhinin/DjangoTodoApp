@@ -1,0 +1,4 @@
+/venv/*
+/todoapp/todoapp/__pycache__/*
+/todoapp/main/__pycache__/*
+/todoapp/main/migrations/__pycache__/*
