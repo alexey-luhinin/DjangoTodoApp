@@ -13,9 +13,9 @@
 		</div>
 		<div class="row mt-3">
 			<div class="col">
-				<form action="#">
-					<input class="form-control" type="text" 
-					 placeholder="Write down your task here">
+				<form method="POST">
+					{% csrf_token %}	
+					{{ form.title }}
 					<br>
 					<div class="text-center">
 						<button type="submit" 
@@ -26,13 +26,33 @@
 		</div>
 		<div class="row mt-5">
 			<div class="col">
-				<ul class="list-group">
-					<li class="list-group-item">Cras justo odio</li>
-					<li class="list-group-item">Dapibus ac facilisis in</li>
-					<li class="list-group-item">Morbi leo risus</li>
-					<li class="list-group-item">Porta ac consectetur ac</li>
-					<li class="list-group-item">Vestibulum at eros</li>
-				</ul>
+				{% if todo_incomplete %}
+					<h6>Incomplete:</h6>
+					<ul class="list-group">
+						{% for todo in todo_incomplete %}
+							<li class="list-group-item">{{ todo.title }}
+							<a href="{% url 'upd' todo.id %}">Update</a>
+							<a href="{% url 'del' todo.id %}">Delete</a>
+							</li>
+						{% endfor %}
+					</ul>
+				{% endif %}
+			</div>
+		</div>
+		<div class="row mt-3">
+			<div class="col">
+				<h6>Complete:</h6>
+				{% if todo_complete %}
+					<ul class="list-group">
+						{% for todo in todo_complete %}
+							<li class="list-group-item">{{ todo.title }}
+							<a href="{% url 'del' todo.id %}">Delete</a>
+							</li>
+						{% endfor %}
+					</ul>
+				{% else %}
+					<p><i>Вы еще ничего не выполнили!</i></p>
+				{% endif %}
 			</div>
 		</div>
 	</div>
